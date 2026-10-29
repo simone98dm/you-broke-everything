@@ -1,0 +1,416 @@
+@import "tailwindcss";
+
+/* ── Mid-2000s desktop world: tokens ───────────────────────────── */
+@theme {
+  --color-desk: #3a6ea5;
+  --color-desk-deep: #24507f;
+  --color-face: #ece9d8;
+  --color-paper: #ffffff;
+  --color-ink: #1a1a1a;
+  --color-ink-soft: #4b4b4b;
+  --color-edge: #808080;
+  --color-edge-soft: #c9c7ba;
+  --color-field: #7f9db9;
+  --color-title: #0a4fd6;
+  --color-legend: #0046d5;
+  --color-select: #316ac5;
+  --color-hover: #f8b636;
+  --color-go: #2a7f2e;
+  --color-go-deep: #1d5e21;
+  --color-task: #245edb;
+  --color-tray: #0b6fc2;
+  --color-balloon: #ffffe1;
+  --color-panic: #c62828;
+  --color-mlg: #39ff14;
+
+  --font-ui: Tahoma, Verdana, 'Segoe UI', sans-serif;
+  --font-wordart: 'Anton', Impact, sans-serif;
+  --font-readout: 'VT323', monospace;
+  --font-meme: Impact, 'Arial Black', sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Browser surfaces ──────────────────────────────────────────── */
+html {
+  background: var(--color-desk);
+  color-scheme: light;
+  scrollbar-color: #c3d3fd var(--color-face);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--color-ink);
+  background: linear-gradient(180deg, var(--color-desk) 0%, var(--color-desk-deep) 100%) fixed;
+  caret-color: var(--color-select);
+}
+
+::selection {
+  background: var(--color-select);
+  color: #fff;
+}
+
+/* XP-style dotted focus rectangle, drawn inside the control */
+:focus-visible {
+  outline: 2px dotted currentColor;
+  outline-offset: 2px;
+}
+
+@layer utilities {
+  .pixelated {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* ── Window ────────────────────────────────────────────────────── */
+@layer components {
+  .xp-window {
+    background: var(--color-face);
+    border: 3px solid var(--color-title);
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 10px 28px rgb(0 0 0 / 0.35);
+  }
+
+  .xp-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2rem;
+    padding: 0.25rem 0.5rem;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    text-shadow: 1px 1px 1px rgb(10 31 94 / 0.9);
+    background: linear-gradient(180deg, #2b7bf2 0%, #0a5fe8 10%, #0a4fd6 45%, #0842c2 88%, #063aa8 100%);
+    border-radius: 5px 5px 0 0;
+  }
+
+  .xp-statusbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 3px;
+    border-top: 1px solid var(--color-edge-soft);
+    font-size: 12px;
+    color: var(--color-ink-soft);
+  }
+
+  .xp-statusbar > * {
+    padding: 2px 8px;
+    border: 1px solid;
+    border-color: var(--color-edge) #fff #fff var(--color-edge);
+  }
+
+  /* ── Buttons ─────────────────────────────────────────────────── */
+  .xp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    min-height: 2.75rem;
+    padding: 0 0.875rem;
+    font: inherit;
+    font-size: 13px;
+    color: var(--color-ink);
+    background: linear-gradient(180deg, #fff 0%, #f3f2ea 60%, #e3e1d4 100%);
+    border: 1px solid #003c74;
+    border-radius: 3px;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .xp-btn:hover:not(:disabled) {
+    box-shadow: inset 0 0 0 2px var(--color-hover);
+  }
+
+  .xp-btn:active:not(:disabled),
+  .xp-btn[aria-pressed='true'],
+  .xp-btn[aria-expanded='true'] {
+    background: linear-gradient(180deg, #d9d6c8 0%, #e6e4d8 100%);
+    box-shadow: inset 1px 1px 2px rgb(0 0 0 / 0.25);
+  }
+
+  .xp-btn:disabled,
+  .xp-btn-go:disabled {
+    color: #6d6b60;
+    text-shadow: none;
+    background: var(--color-face);
+    border-color: #b5b2a3;
+    cursor: not-allowed;
+  }
+
+  .xp-btn-go {
+    color: #fff;
+    font-weight: 700;
+    font-style: italic;
+    text-shadow: 1px 1px 1px rgb(0 0 0 / 0.5);
+    background: linear-gradient(180deg, #4aa64e 0%, var(--color-go) 35%, var(--color-go-deep) 100%);
+    border-color: #154a18;
+  }
+
+  .xp-btn-go:hover:not(:disabled) {
+    box-shadow: inset 0 0 0 2px #9be08f;
+  }
+
+  .xp-btn-go:active:not(:disabled) {
+    background: linear-gradient(180deg, var(--color-go-deep) 0%, var(--color-go) 100%);
+  }
+
+  /* ── Fields ──────────────────────────────────────────────────── */
+  .xp-field {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0 0.625rem;
+    font: inherit;
+    color: var(--color-ink);
+    background: var(--color-paper);
+    border: 1px solid var(--color-field);
+  }
+
+  .xp-field:focus-visible {
+    outline-offset: -4px;
+    border-color: var(--color-select);
+  }
+
+  .xp-field:disabled {
+    background: var(--color-face);
+    color: var(--color-ink-soft);
+  }
+
+  input[type='range'],
+  input[type='radio'],
+  input[type='checkbox'] {
+    accent-color: var(--color-select);
+  }
+
+  /* ── Group box (fieldset) ────────────────────────────────────── */
+  .xp-group {
+    margin: 0;
+    padding: 0.5rem 0.75rem 0.75rem;
+    border: 1px solid #d0d0bf;
+    border-radius: 4px;
+  }
+
+  .xp-group > legend {
+    padding: 0 0.25rem;
+    color: var(--color-legend);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* ── Selectable option (radio / checkbox inside a label) ─────── */
+  .xp-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.625rem;
+    background: var(--color-paper);
+    border: 1px solid var(--color-edge-soft);
+    cursor: pointer;
+  }
+
+  .xp-option:hover {
+    border-color: var(--color-hover);
+  }
+
+  .xp-option:has(:checked) {
+    background: var(--color-select);
+    border-color: #1c4a96;
+    color: #fff;
+  }
+
+  .xp-option:has(:disabled) {
+    color: #6d6b60;
+    background: var(--color-face);
+    cursor: not-allowed;
+  }
+
+  .xp-option:has(:focus-visible) {
+    outline: 2px dotted currentColor;
+    outline-offset: -5px;
+  }
+
+  .xp-option input {
+    margin-top: 0.125rem;
+    flex-shrink: 0;
+  }
+
+  .xp-option input:focus-visible {
+    outline: none;
+  }
+
+  /* Keep the checked dot visible on the blue selection highlight */
+  .xp-option input:checked {
+    accent-color: #fff;
+  }
+
+  .xp-hint {
+    display: block;
+    font-size: 12px;
+    color: var(--color-ink-soft);
+  }
+
+  .xp-option:has(:checked) .xp-hint {
+    color: #fff;
+  }
+
+  /* ── Property-sheet tabs ─────────────────────────────────────── */
+  .xp-tab {
+    position: relative;
+    min-height: 2.75rem;
+    padding: 0 0.875rem;
+    font: inherit;
+    color: var(--color-ink);
+    background: linear-gradient(180deg, #fff 0%, #ecebe5 100%);
+    border: 1px solid #919b9c;
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .xp-tab:hover {
+    box-shadow: inset 0 3px 0 var(--color-hover);
+  }
+
+  .xp-tab[aria-selected='true'] {
+    z-index: 1;
+    margin-bottom: -1px;
+    background: #fcfcfe;
+    font-weight: 700;
+    box-shadow: inset 0 3px 0 #e68b2c;
+  }
+
+  .xp-tab:focus-visible {
+    outline-offset: -5px;
+  }
+
+  .xp-sheet {
+    background: #fcfcfe;
+    border: 1px solid #919b9c;
+  }
+
+  /* ── Disclosure (details/summary) ────────────────────────────── */
+  .xp-details > summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0 0.5rem;
+    color: var(--color-legend);
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .xp-details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .xp-details > summary::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-block: 5px solid transparent;
+    border-inline-start: 6px solid currentColor;
+    transition: rotate 150ms var(--ease-out-expo);
+  }
+
+  .xp-details[open] > summary::before {
+    rotate: 90deg;
+  }
+
+  /* ── Balloon tip ─────────────────────────────────────────────── */
+  .xp-balloon {
+    position: relative;
+    background: var(--color-balloon);
+    border: 1px solid #000;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.3);
+  }
+
+  .xp-balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: 2.5rem;
+    border-inline: 10px solid transparent;
+    border-top: 10px solid #000;
+  }
+
+  .xp-balloon::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: calc(2.5rem + 1px);
+    z-index: 1;
+    border-inline: 9px solid transparent;
+    border-top: 9px solid var(--color-balloon);
+  }
+
+  /* ── Export dialog ───────────────────────────────────────────── */
+  .xp-dialog {
+    padding: 0;
+    width: min(36rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2rem);
+    overflow: hidden;
+  }
+
+  .xp-dialog::backdrop {
+    background: rgb(10 25 60 / 0.55);
+  }
+
+  .xp-dialog[open] {
+    animation: xp-window-open 220ms var(--ease-out-expo);
+  }
+}
+
+/* 2000s WordArt "rainbow" headline: gradient fill, dark outline, 3D extrusion, upward tilt */
+.wordart {
+  font-family: var(--font-wordart);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: transparent;
+  background: linear-gradient(90deg, #ff2d2d 0%, #ff9a1f 20%, #ffe81f 38%, #3ddc4a 56%, #2fa8ff 76%, #b44dff 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 1.5px #14213d;
+  filter: drop-shadow(1px 1px 0 #0d1f4d) drop-shadow(1px 1px 0 #0d1f4d) drop-shadow(2px 2px 0 #0a1636) drop-shadow(0 4px 8px rgb(0 0 0 / 0.35));
+  transform: perspective(600px) rotateX(14deg) skewX(-6deg);
+  transform-origin: left bottom;
+}
+
+/* CRT Scanline Effect */
+.crt-overlay::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 20;
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+@keyframes xp-window-open {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

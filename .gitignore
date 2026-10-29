@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build output
+build/
+dist/
+server.js
+*.tsbuildinfo
+
+# Test coverage
+coverage/
+
+# Env / secrets
+.env*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# AI agent / tooling state (local only)
+.claude/
+.claude-flow/
+.swarm/
+.impeccable/
+.hive-mind/
+agentdb.rvf
+agentdb.rvf.idmap.json
+*.rvf
+ruvector.db
+*.db
