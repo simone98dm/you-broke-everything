@@ -81,4 +81,4 @@ Issues and pull requests are welcome. Before opening a PR, make sure `npm run li
 
 ## License
 
-[MIT](LICENSE) © 2026 Simone Dalmas
+[MIT](LICENSE) © 2026 simone98dm
